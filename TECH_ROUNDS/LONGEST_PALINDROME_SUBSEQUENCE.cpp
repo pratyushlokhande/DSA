@@ -56,13 +56,41 @@ int longestPalindromeSubseq(string s)
     return max_len;
 }
 
+// method: 2
+int longestPalindromeSubseq2(string s)
+{
+    int n = s.length();
+    int dp[n][n];
+    for (int i = 0; i < n; i++)
+    {
+        dp[i][i] = 1;
+    }
+    int max_len = 0;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (s[i] == s[j])
+            {
+                dp[i][j] = dp[i + 1][j - 1] + 2;
+            }
+            else
+            {
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
+            }
+            max_len = max(max_len, dp[i][j]);
+        }
+    }
+    return max_len;
+}
+
 void solve()
 {
     // code here
     string s;
     cin >> s;
 
-    cout << longestPalindromeSubseq(s) << endl;
+    cout << longestPalindromeSubseq2(s) << endl;
 }
 
 int main()
